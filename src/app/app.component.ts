@@ -6,5 +6,44 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
+  todoInput: string = "";
+
+  todos = [];
+
+  // checkOffTodo(todo) {
+  //   todo.isChecked = !todo.isChecked;
+  // }
+
+  createTodo() {
+    let trimmedInput = this.todoInput.trim();
+    if(trimmedInput != ""){
+
+      this.todos.push({
+        isChecked: false,
+        name: this.todoInput
+    });
+      this.todoInput = "";
+    }
+  }
+
+  editTodo(todo) {
+    let index = this.todos.indexOf(todo);
+
+    let oldTodo = this.todos[index].name;
+
+    this.todos[index].name = prompt("Please edit your todo", this.todos[index].name);
+
+    if (this.todos[index].name == null) {
+      this.todos[index].name = oldTodo;
+    }
+  }
+
+  deleteTodo(todo) {
+    let index = this.todos.indexOf(todo);
+    this.todos.splice(index, 1);
+  }
+
+  deleteAllTodos() {
+    this.todos = [];
+  }
 }
